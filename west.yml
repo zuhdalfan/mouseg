@@ -21,6 +21,6 @@ manifest:
           - hal_nordic
 
     - name: paw3395
-      remote: zuhdalfan        # ✅ use remote name here
+      remote: zuhdalfan        
       revision: main
       path: modules/paw3395
