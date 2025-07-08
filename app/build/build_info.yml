@@ -1,0 +1,55 @@
+cmake:
+  application:
+    configuration-dir: '/home/zuhdalfan/Project/zephyr-mouseg/mouseg-app/app'
+    source-dir: '/home/zuhdalfan/Project/zephyr-mouseg/mouseg-app/app'
+  board:
+    name: 'nrf52840dk'
+    path:
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/boards/nordic/nrf52840dk'
+    qualifiers: 'nrf52840'
+    revision: ''
+  devicetree:
+    bindings-dirs:
+     - '/home/zuhdalfan/Project/zephyr-mouseg/modules/paw3395/dts/bindings'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/bindings'
+    files:
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/boards/nordic/nrf52840dk/nrf52840dk_nrf52840.dts'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/mouseg-app/app/app.overlay'
+    include-dirs:
+     - '/home/zuhdalfan/Project/zephyr-mouseg/modules/paw3395/dts'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/include'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/common'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/vendor'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/rx'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/x86'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/xtensa'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/sparc'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/riscv'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/posix'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/arm64'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/arm'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/arc'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts'
+    user-files:
+     - '/home/zuhdalfan/Project/zephyr-mouseg/mouseg-app/app/app.overlay'
+  kconfig:
+    files:
+     - '/home/zuhdalfan/Project/zephyr-mouseg/zephyr/boards/nordic/nrf52840dk/nrf52840dk_nrf52840_defconfig'
+     - '/home/zuhdalfan/Project/zephyr-mouseg/mouseg-app/app/prj.conf'
+    user-files:
+     - '/home/zuhdalfan/Project/zephyr-mouseg/mouseg-app/app/prj.conf'
+  toolchain:
+    name: 'zephyr'
+    path: '/home/zuhdalfan/zephyr-sdk-0.17.2'
+  vendor-specific:
+    nordic:
+      svdfile: '/home/zuhdalfan/Project/zephyr-mouseg/modules/hal/nordic/nrfx/mdk/nrf52840.svd'
+  zephyr:
+    version: '4.2.0-rc1'
+    zephyr-base: '/home/zuhdalfan/Project/zephyr-mouseg/zephyr'
+version: '0.1.0'
+west:
+  command: '/home/zuhdalfan/.pyenv/versions/3.12.3/bin/west build -p always -- -DDTC_OVERLAY=app.overlay'
+  topdir: '/home/zuhdalfan/Project/zephyr-mouseg'
+  version: '1.4.0'

@@ -1,0 +1,19 @@
+/ {
+    aliases {
+        paw3395 = &paw3395_0;
+    };
+};
+
+&spi1 {
+    compatible = "nordic,nrf-spim";
+    status = "okay";
+    cs-gpios = <&gpio0 10 GPIO_ACTIVE_LOW>;
+
+    paw3395_0: paw3395@0 {
+        compatible = "pixart,paw3395";
+        reg = <0>;
+        irq-gpios = <&gpio0 11 GPIO_ACTIVE_HIGH>;
+        spi-max-frequency = <2000000>;
+    };
+};
+

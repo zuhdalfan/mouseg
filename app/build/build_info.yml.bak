@@ -1,0 +1,4 @@
+west:
+  command: /home/zuhdalfan/.pyenv/versions/3.12.3/bin/west build -p always -- -DDTC_OVERLAY=app.overlay
+  topdir: /home/zuhdalfan/Project/zephyr-mouseg
+  version: 1.4.0

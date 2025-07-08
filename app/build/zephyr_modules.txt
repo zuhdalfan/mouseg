@@ -1,0 +1,3 @@
+"cmsis_6":"/home/zuhdalfan/Project/zephyr-mouseg/modules/hal/cmsis_6":"${ZEPHYR_CMSIS_6_CMAKE_DIR}"
+"hal_nordic":"/home/zuhdalfan/Project/zephyr-mouseg/modules/hal/nordic":"${ZEPHYR_HAL_NORDIC_CMAKE_DIR}"
+"paw3395":"/home/zuhdalfan/Project/zephyr-mouseg/mouseg-app/app/../../modules/paw3395":"/home/zuhdalfan/Project/zephyr-mouseg/modules/paw3395"

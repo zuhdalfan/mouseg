@@ -1,0 +1,33 @@
+empty_file.o: \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/misc/empty_file.c \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/boards/nordic/nrf52840dk/nrf52840dk_nrf52840.dts \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/arm/nordic/nrf52840_qiaa.dtsi \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/common/mem.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/arm/nordic/nrf52840.dtsi \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/arm/armv7-m.dtsi \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/common/skeleton.dtsi \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/vendor/nordic/nrf_common.dtsi \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/dt-bindings/adc/adc.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/dt-bindings/dt-util.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/sys/util_macro.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/sys/util_internal.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/sys/util_loops.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/sys/util_listify.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/sys/util_internal_is_eq.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/sys/util_internal_util_inc.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/sys/util_internal_util_dec.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/sys/util_internal_util_x2.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/dt-bindings/gpio/gpio.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/dt-bindings/i2c/i2c.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/dt-bindings/input/input-event-codes.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/dt-bindings/pinctrl/nrf-pinctrl.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/dt-bindings/pwm/pwm.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/common/freq.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/arm/nordic/override.dtsi \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/dt-bindings/adc/nrf-saadc-v3.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/dt-bindings/adc/nrf-saadc-v2.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/dt-bindings/adc/nrf-saadc.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/include/zephyr/dt-bindings/regulator/nrf5x.h \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/dts/vendor/nordic/nrf52840_partition.dtsi \
+ /home/zuhdalfan/Project/zephyr-mouseg/zephyr/boards/nordic/nrf52840dk/nrf52840dk_nrf52840-pinctrl.dtsi \
+ /home/zuhdalfan/Project/zephyr-mouseg/mouseg-app/app/app.overlay

@@ -1,0 +1,21 @@
+menu "cmsis_6 (/home/zuhdalfan/Project/zephyr-mouseg/modules/hal/cmsis_6)"
+osource "$(ZEPHYR_CMSIS_6_KCONFIG)"
+config ZEPHYR_CMSIS_6_MODULE
+	bool
+	default y
+endmenu
+menu "hal_nordic (/home/zuhdalfan/Project/zephyr-mouseg/modules/hal/nordic)"
+osource "$(ZEPHYR_HAL_NORDIC_KCONFIG)"
+config ZEPHYR_HAL_NORDIC_MODULE
+	bool
+	default y
+
+config ZEPHYR_HAL_NORDIC_MODULE_BLOBS
+	bool
+endmenu
+menu "paw3395 (/home/zuhdalfan/Project/zephyr-mouseg/mouseg-app/app/../../modules/paw3395)"
+osource "/home/zuhdalfan/Project/zephyr-mouseg/modules/paw3395/Kconfig"
+config ZEPHYR_PAW3395_MODULE
+	bool
+	default y
+endmenu
