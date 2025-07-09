@@ -36,7 +36,7 @@ int main(void) {
 			int encoder_delta = encoder_get_scroll_delta();
 			bool encoder_switch = encoder_get_button_state();
 
-            // printk("dx=%d, dy=%d, speed=%.2f IPS, encoder_delta=%d, encoder_switch=%d\n", dx_count, dy_count, speed_ips, encoder_delta, encoder_switch);
+            printk("dx=%d, dy=%d, speed=%.2f IPS, encoder_delta=%d, encoder_switch=%d\n", dx_count, dy_count, speed_ips, encoder_delta, encoder_switch);
         }
         k_msleep(10);    
     }
