@@ -3,13 +3,42 @@
 #include <zephyr/kernel.h>
 #include <zephyr/sys/printk.h>
 #include <math.h>
-#include "encoder.h"
+
+#include "paw3395.h"
+
+static const uint32_t paw3395_cpi_choices[] = {
+    800, 1600, 2400, 3200, 5000, 10000, 26000
+};
+
+void change_dpi(const struct device *dev, int cpi) {
+    struct sensor_value val;
+    val.val1 = cpi;
+    int ret = sensor_attr_set(dev, SENSOR_CHAN_ALL, PAW3395_ATTR_X_CPI, &val);
+    if (ret < 0) {
+        printk("Failed to set X CPI: %d\n", ret);
+        return;
+    }
+    ret = sensor_attr_set(dev, SENSOR_CHAN_ALL, PAW3395_ATTR_Y_CPI, &val);
+    if (ret < 0) {
+        printk("Failed to set Y CPI: %d\n", ret);
+        return;
+    }
+}
+
+static paw3395_cpi_enum_t current_cpi_index = PAW3395_CPI_800;
+
+void rotate_dpi_10s(const struct device *dev)
+{
+    uint32_t cpi = paw3395_cpi_choices[current_cpi_index];
+    change_dpi(dev, cpi);
+    printk("Rotated CPI to %d\n", cpi);
+
+    current_cpi_index = (current_cpi_index + 1) % PAW3395_CPI_COUNT;
+}
 
 int main(void) {
 
 	k_msleep(1000);
-
-	encoder_init();
 
     const struct device *paw3395 = DEVICE_DT_GET_ONE(pixart_paw3395);
     if (!device_is_ready(paw3395)) {
@@ -32,13 +61,22 @@ int main(void) {
             float distance_inches = distance_counts / cpi;
             float speed_ips = distance_inches / interval_sec;
 
-			// get encoder value
-			int encoder_delta = encoder_get_scroll_delta();
-			bool encoder_switch = encoder_get_button_state();
-
-            printk("dx=%d, dy=%d, speed=%.2f IPS, encoder_delta=%d, encoder_switch=%d\n", dx_count, dy_count, speed_ips, encoder_delta, encoder_switch);
+            printk("dx=%d, dy=%d, speed=%.2f IPS\n", dx_count, dy_count, speed_ips);
         }
         k_msleep(10);    
+
+        // test CPI set
+        static int count = 0;
+        count++;
+        if (count % 100 == 0) {
+            static int seconds = 0;
+            seconds++;
+    
+            if (seconds % 10 == 0) {
+                rotate_dpi_10s(paw3395);
+            }
+        }
+
     }
 
     return 0;

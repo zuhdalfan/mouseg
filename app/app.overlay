@@ -1,27 +1,7 @@
 / {
     aliases {
         paw3395 = &paw3395_0;
-        scrolla = &scroll_a;
-        scrollb = &scroll_b;
-        scrollbtn = &scroll_btn;
     };
-
-    
-    buttons {
-        compatible = "gpio-keys";
-        status = "okay";
-        
-        scroll_a: scroll_a {
-            gpios = <&gpio0 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        };
-        scroll_b: scroll_b {
-            gpios = <&gpio0 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
-        };
-        scroll_btn: scroll_btn {
-            gpios = <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
-        };
-    };
-        
 };
 
 
