@@ -61,7 +61,7 @@ int main(void) {
             float distance_inches = distance_counts / cpi;
             float speed_ips = distance_inches / interval_sec;
 
-            printk("dx=%d, dy=%d, speed=%.2f IPS\n", dx_count, dy_count, speed_ips);
+            printk("dx=%d, dy=%d, speed=%d.%02d IPS\n", dx_count, dy_count, (int)speed_ips, (int)(speed_ips * 100) % 100);
         }
         k_msleep(10);    
 
