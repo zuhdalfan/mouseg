@@ -19,7 +19,10 @@ static volatile bool button_pressed = false;
 static int last_a = 0;
 static int last_b = 0;
 
+#include <zephyr/kernel.h>
+
 #define DEBOUNCE_MS 20
+static struct k_work_delayable debounce_work;
 static int64_t last_btn_change_time = 0;
 
 static void update_scroll_direction(void) {
@@ -52,10 +55,20 @@ static void scroll_b_isr(const struct device *dev, struct gpio_callback *cb, uin
     update_scroll_direction();
 }
 
-static void btn_isr(const struct device *dev, struct gpio_callback *cb, uint32_t pins) {
-    button_pressed = !gpio_pin_get_dt(&scroll_btn);  // active low
-    printk("Button state changed: %s\n", button_pressed ? "Pressed" : "Released");
+static void debounce_btn(struct k_work *work)
+{
+    bool state = !gpio_pin_get_dt(&scroll_btn);  // active low
+    if (state != button_pressed) {
+        button_pressed = state;
+        printk("Button state changed (debounced): %s\n", button_pressed ? "Pressed" : "Released");
+    }
 }
+
+static void btn_isr(const struct device *dev, struct gpio_callback *cb, uint32_t pins)
+{
+    k_work_schedule(&debounce_work, K_MSEC(DEBOUNCE_MS));
+}
+
 
 int encoder_get_scroll_delta(void) {
     int delta = scroll_delta;
@@ -116,6 +129,8 @@ int encoder_init(void) {
     gpio_add_callback(scroll_b.port, &scroll_b_cb);
 
     // Interrupt for scroll button (center click)
+    k_work_init_delayable(&debounce_work, debounce_btn);
+
     ret = gpio_pin_interrupt_configure_dt(&scroll_btn, GPIO_INT_EDGE_BOTH);
     if (ret) {
         printk("Failed to configure scroll button interrupt: %d\n", ret);
