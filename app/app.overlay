@@ -1,47 +1,40 @@
-// / {
-//     aliases {
-//         paw3395 = &paw3395_0;
-//     };
-// };
+/ {
+    aliases {
+        paw3395 = &paw3395_0;
+    };
+};
 
-// &spi1 {
-//     compatible = "nordic,nrf-spim";
-//     status = "okay";
-//     pinctrl-0 = <&spi1_default>;
-//     pinctrl-1 = <&spi1_sleep>;
-//     pinctrl-names = "default", "sleep";
-//     cs-gpios = <&gpio0 2 GPIO_ACTIVE_LOW>;
+&spi1 {
+    compatible = "nordic,nrf-spim";
+    status = "okay";
+    pinctrl-0 = <&spi1_default>;
+    pinctrl-1 = <&spi1_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&gpio0 2 GPIO_ACTIVE_LOW>;
 
 
-//     paw3395_0: paw3395@0 {
-//         compatible = "pixart,paw3395";
-//         reg = <0>;
-//         irq-gpios = <&gpio0 3 GPIO_ACTIVE_HIGH>;
-//         spi-max-frequency = <2000000>;
-//     };
-// };
+    paw3395_0: paw3395@0 {
+        compatible = "pixart,paw3395";
+        reg = <0>;
+        irq-gpios = <&gpio0 3 GPIO_ACTIVE_HIGH>;
+        spi-max-frequency = <2000000>;
+    };
+};
 
-// &pinctrl {
-//     spi1_default: spi1_default {
-//         group1 {
-//             psels = <NRF_PSEL(SPIM_SCK, 0, 19)>, 
-//                     <NRF_PSEL(SPIM_MOSI, 0, 20)>,
-//                     <NRF_PSEL(SPIM_MISO, 0, 21)>;
-//             };
-//     };
-//     spi1_sleep: spi1_sleep {
-//         group1 {
-//             psels = <NRF_PSEL(SPIM_SCK, 0, 19)>,
-//                     <NRF_PSEL(SPIM_MOSI, 0, 20)>,
-//                     <NRF_PSEL(SPIM_MISO, 0, 21)>;
-//             low-power-enable;
-//         };
-//     };
-// };
-
-&zephyr_udc0 {
-	cdc_acm_uart0 {
-		compatible = "zephyr,cdc-acm-uart";
-		label = "Zephyr USB CDC-ACM";
-	};
+&pinctrl {
+    spi1_default: spi1_default {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 19)>, 
+                    <NRF_PSEL(SPIM_MOSI, 0, 20)>,
+                    <NRF_PSEL(SPIM_MISO, 0, 21)>;
+            };
+    };
+    spi1_sleep: spi1_sleep {
+        group1 {
+            psels = <NRF_PSEL(SPIM_SCK, 0, 19)>,
+                    <NRF_PSEL(SPIM_MOSI, 0, 20)>,
+                    <NRF_PSEL(SPIM_MISO, 0, 21)>;
+            low-power-enable;
+        };
+    };
 };
