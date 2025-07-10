@@ -235,10 +235,15 @@ int main(void) {
 #if 1
 #include <zephyr/kernel.h>
 #include <zephyr/usb/usb_device.h>
-#include <zephyr/sys/printk.h>  // Optional, but helps clarity
+#include <zephyr/sys/printk.h>  
 
 int main(void)
 {
+    const struct device *const cdc_dev = DEVICE_DT_GET_ONE(zephyr_cdc_acm_uart);
+    if (!device_is_ready(cdc_dev)) {
+        printk("CDC ACM device not ready\n");
+    }
+
     int ret = usb_enable(NULL);
     if (ret != 0) {
         printk("Failed to enable USB: %d\n", ret);
