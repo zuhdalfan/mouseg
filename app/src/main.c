@@ -1,3 +1,4 @@
+#if 0
 #include <zephyr/device.h>
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/kernel.h>
@@ -228,3 +229,30 @@ int main(void) {
 
     return 0;
 }
+
+#endif
+
+#if 1
+#include <zephyr/kernel.h>
+#include <zephyr/usb/usb_device.h>
+#include <zephyr/sys/printk.h>  // Optional, but helps clarity
+
+int main(void)
+{
+    int ret = usb_enable(NULL);
+    if (ret != 0) {
+        printk("Failed to enable USB: %d\n", ret);
+        return;
+    }
+
+    printk("USB CDC started\n");
+
+    while (1) {
+        printk("Hello from Zephyr\n");
+        k_sleep(K_SECONDS(1));
+    }
+
+    return 0;
+}
+
+#endif
