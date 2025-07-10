@@ -4,7 +4,6 @@
     };
 };
 
-
 &spi1 {
     compatible = "nordic,nrf-spim";
     status = "okay";
@@ -38,4 +37,11 @@
             low-power-enable;
         };
     };
+};
+
+&zephyr_udc0 {
+	cdc_acm_uart0 {
+		compatible = "zephyr,cdc-acm-uart";
+		label = "Zephyr USB CDC-ACM";
+	};
 };
