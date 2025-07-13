@@ -18,20 +18,18 @@ static struct gpio_callback right_cb_data;
 static struct k_work_delayable left_work;
 static struct k_work_delayable right_work;
 
-static switch_callback_t user_callback;
+static bool left_pressed = false;
+static bool right_pressed = false;
 
 static void debounce_left(struct k_work *work)
 {
-    if (gpio_pin_get_dt(&left_switch) == 0) { // Active Low
-        if (user_callback) user_callback(0);
-    }
+    // Active-low: pressed when pin reads 0
+    left_pressed = (gpio_pin_get_dt(&left_switch) == 0);
 }
 
 static void debounce_right(struct k_work *work)
 {
-    if (gpio_pin_get_dt(&right_switch) == 0) {
-        if (user_callback) user_callback(1);
-    }
+    right_pressed = (gpio_pin_get_dt(&right_switch) == 0);
 }
 
 static void switch_pressed_isr(const struct device *dev, struct gpio_callback *cb, uint32_t pins)
@@ -45,9 +43,18 @@ static void switch_pressed_isr(const struct device *dev, struct gpio_callback *c
     }
 }
 
-void switch_init(switch_callback_t callback)
+bool switch_get_state_left(void)
 {
-    user_callback = callback;
+    return left_pressed;
+}
+
+bool switch_get_state_right(void)
+{
+    return right_pressed;
+}
+
+void switch_init()
+{
 
     if (!device_is_ready(left_switch.port)) {
         printk("Error: left switch device not ready\n");

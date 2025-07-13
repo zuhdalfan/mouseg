@@ -57,18 +57,15 @@ static void scroll_b_isr(const struct device *dev, struct gpio_callback *cb, uin
 
 static void debounce_btn(struct k_work *work)
 {
-    bool state = !gpio_pin_get_dt(&scroll_btn);  // active low
-    if (state != button_pressed) {
-        button_pressed = state;
-        printk("Button state changed (debounced): %s\n", button_pressed ? "Pressed" : "Released");
-    }
+    button_pressed = (gpio_pin_get_dt(&scroll_btn) == 0);  // active low
 }
 
 static void btn_isr(const struct device *dev, struct gpio_callback *cb, uint32_t pins)
 {
-    k_work_schedule(&debounce_work, K_MSEC(DEBOUNCE_MS));
+    if (pins & BIT(scroll_btn.pin)) {
+        k_work_schedule(&debounce_work, K_MSEC(DEBOUNCE_MS));
+    }
 }
-
 
 int encoder_get_scroll_delta(void) {
     int delta = scroll_delta;

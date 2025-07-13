@@ -4,7 +4,7 @@
         scrolla = &scroll_a;
         scrollb = &scroll_b;
         scrollbtn = &scroll_btn;
-        ledstrip = &ws2812;
+        ledstrip = &led_strip;
         sw0 = &left_button;
         sw1 = &right_button;
     };
@@ -52,17 +52,20 @@
     };
 };
 
-&pwm0 {
-    status = "okay";
+i2s_led: &i2s0 {
+	status = "okay";
+	pinctrl-0 = <&i2s0_default_alt>;
+	pinctrl-names = "default";
 
-    ws2812: ws2812 {
-        compatible = "worldsemi,ws2812-pwm";
-        chain-length = <1>;  // Number of LEDs
-        color-order = "GRB";
-        pwms = <&pwm0 0 PWM_USEC(1) 0>;  // Channel 0, 800kHz (1.25µs period)
-        pinctrl-0 = <&pwm0_default>;
-        pinctrl-names = "default";
-    };
+	led_strip: ws2812@0 {
+		compatible = "worldsemi,ws2812-i2s";
+
+		reg = <0>;
+		chain-length = <10>; /* arbitrary; change at will */
+		color-mapping = <1 0 2>;
+		out-active-low;
+		reset-delay = <120>;
+	};
 };
 
 
@@ -82,11 +85,14 @@
             low-power-enable;
         };
     };
-    pwm0_default: pwm0_default {
-        group1 {
-            psels = <NRF_PSEL(PWM_OUT0, 0, 13)>;
-        };
-    };
+    i2s0_default_alt: i2s0_default_alt {
+		group1 {
+			psels = <NRF_PSEL(I2S_SCK_M, 0, 22)>,
+				<NRF_PSEL(I2S_LRCK_M, 0, 23)>,
+				<NRF_PSEL(I2S_SDOUT, 0, 24)>,
+				<NRF_PSEL(I2S_SDIN, 0, 25)>;
+		};
+	};
 };
 
 

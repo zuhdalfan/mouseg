@@ -5,9 +5,9 @@
 extern "C" {
 #endif
 
-typedef void (*switch_callback_t)(int switch_id);
-
-void switch_init(switch_callback_t callback);
+void switch_init();
+bool switch_get_state_left(void);
+bool switch_get_state_right(void);
 
 #ifdef __cplusplus
 }

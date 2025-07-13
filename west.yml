@@ -22,5 +22,5 @@ manifest:
 
     - name: paw3395
       remote: zuhdalfan        
-      revision: main
+      revision: dev
       path: modules/paw3395
