@@ -29,14 +29,15 @@ LOG_MODULE_REGISTER(business_logic, LOG_LEVEL_DBG);
 */
 
 // polling rate options 1ms, 0.125ms
-#define POLLING_RATE_1US 1000
-#define POLLING_RATE_0125US 125
+#define POLLING_RATE_1000US 1000
+#define POLLING_RATE_125US 125
 paw3395_cpi_enum_t cpi_val = PAW3395_CPI_1600;
 const struct device *paw3395 = DEVICE_DT_GET_ONE(pixart_paw3395);
 
 // paw3395 setup
 int cursor_position_x;
 int cursor_position_y;
+int cnt = 0;
 
 void sensor_cursor_init()
 {
@@ -61,12 +62,15 @@ int get_connection_type()
 
 void delay_for_polling_rate(connection_type_enum_t conn_type)
 {
+    k_msleep(20); // TODO: this just for testing
+    return;
+
     if (conn_type == CONN_USB) {
-        k_usleep(POLLING_RATE_1US);
+        k_usleep(POLLING_RATE_1000US);
     } else if (conn_type == CONN_ESB) {
-        k_usleep(POLLING_RATE_0125US);
+        k_usleep(POLLING_RATE_125US);
     } else if (conn_type == CONN_BLE) {
-        k_usleep(POLLING_RATE_1US); // Assuming BLE uses the same rate as USB for simplicity
+        k_usleep(POLLING_RATE_1000US); // Assuming BLE uses the same rate as USB for simplicity
     }else{
         // no polling
         k_usleep(850000);
@@ -141,11 +145,12 @@ void send_output_to_host(int cursor_x, int cursor_y, int encoder_increment, bool
 {
     // This function should send the output values to the host
     // For now, we will just print the values to the console
-    LOG_DBG("cursor_x,%d,cursor_y,%d,encoder_increment,%d,encoder_button,%s,switch_right,%s,switch_left,%s\n",
-        cursor_x, cursor_y, encoder_increment,
-        encoder_button_state ? "Pressed" : "Released",
-        switch_right_state ? "Pressed" : "Released",
-        switch_left_state ? "Pressed" : "Released");
+    cnt++;
+    printk("%d,cursor_x,%d,cursor_y,%d,encoder_increment,%d,encoder_button,%d,switch_right,%d,switch_left,%d\n",
+        cnt, cursor_x, cursor_y, encoder_increment,
+        encoder_button_state,
+        switch_right_state,
+        switch_left_state);
 
 }
 
@@ -159,7 +164,7 @@ void polling_init()
 void polling_run(void)
 {
     // Initiation code here if needed
-
+    polling_init();
     while (1) {
         //TODO: Send output values to host
         send_output_to_host(
@@ -243,7 +248,7 @@ void dpi_control_thread(void *arg1, void *arg2, void *arg3)
             // increase DPI
             rotate_dpi();
             // set LED
-            update_led(cpi_val);
+            // update_led(cpi_val);
         }
 
         k_msleep(1);

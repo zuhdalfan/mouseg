@@ -24,12 +24,12 @@ static bool right_pressed = false;
 static void debounce_left(struct k_work *work)
 {
     // Active-low: pressed when pin reads 0
-    left_pressed = (gpio_pin_get_dt(&left_switch) == 0);
+    left_pressed = (gpio_pin_get_dt(&left_switch) == 1);
 }
 
 static void debounce_right(struct k_work *work)
 {
-    right_pressed = (gpio_pin_get_dt(&right_switch) == 0);
+    right_pressed = (gpio_pin_get_dt(&right_switch) == 1);
 }
 
 static void switch_pressed_isr(const struct device *dev, struct gpio_callback *cb, uint32_t pins)
@@ -69,8 +69,8 @@ void switch_init()
     gpio_pin_configure_dt(&left_switch, GPIO_INPUT | GPIO_PULL_UP);
     gpio_pin_configure_dt(&right_switch, GPIO_INPUT | GPIO_PULL_UP);
 
-    gpio_pin_interrupt_configure_dt(&left_switch, GPIO_INT_EDGE_TO_ACTIVE);
-    gpio_pin_interrupt_configure_dt(&right_switch, GPIO_INT_EDGE_TO_ACTIVE);
+    gpio_pin_interrupt_configure_dt(&left_switch, GPIO_INT_EDGE_BOTH);
+    gpio_pin_interrupt_configure_dt(&right_switch, GPIO_INT_EDGE_BOTH);
 
     gpio_init_callback(&left_cb_data, switch_pressed_isr, BIT(left_switch.pin));
     gpio_init_callback(&right_cb_data, switch_pressed_isr, BIT(right_switch.pin));
