@@ -15,20 +15,20 @@
         status = "okay";
         
         scroll_a: scroll_a {
-            gpios = <&gpio0 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+            gpios = <&gpio0 10 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         };
         scroll_b: scroll_b {
             gpios = <&gpio0 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
         };
         scroll_btn: scroll_btn {
-            gpios = <&gpio0 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            gpios = <&gpio0 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         };
         right_button: right_button {
-            gpios = <&gpio0 12 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            gpios = <&gpio0 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
             label = "Right Click";
         };
         left_button: left_button {
-            gpios = <&gpio0 25 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+            gpios = <&gpio0 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
             label = "Left Click";
         };
     };    
@@ -89,8 +89,8 @@ i2s_led: &i2s0 {
 		group1 {
 			psels = <NRF_PSEL(I2S_SCK_M, 0, 22)>,
 				<NRF_PSEL(I2S_LRCK_M, 0, 23)>,
-				<NRF_PSEL(I2S_SDOUT, 0, 24)>,
-				<NRF_PSEL(I2S_SDIN, 0, 26)>;
+				<NRF_PSEL(I2S_SDOUT, 0, 5)>,
+				<NRF_PSEL(I2S_SDIN, 0, 24)>;
 		};
 	};
 };
