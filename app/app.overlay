@@ -7,6 +7,7 @@
         ledstrip = &led_strip;
         sw0 = &left_button;
         sw1 = &right_button;
+        fuel-gauge0 = &max17048;
     };
 
     
@@ -105,5 +106,33 @@ i2s_led: &i2s0 {
 &zephyr_udc0 {
 	cdc_acm_uart0: cdc_acm_uart0 {
 		compatible = "zephyr,cdc-acm-uart";
+	};
+};
+
+&i2c0 {
+	status = "okay";
+	compatible = "nordic,nrf-twim";
+	pinctrl-0 = <&i2c0_default>;
+	pinctrl-1 = <&i2c0_sleep>;
+	pinctrl-names = "default", "sleep";
+	max17048:max17048@36 {
+		compatible = "maxim,max17048";
+		status = "ok";
+		reg = <0x36 >;
+	};
+};
+
+&pinctrl {
+	i2c0_default: i2c0_default {
+		group1 {
+			psels = <NRF_PSEL(TWIM_SDA, 0, 26)>, <NRF_PSEL(TWIM_SCL, 0, 27)>;
+		};
+	};
+
+	i2c0_sleep: i2c0_sleep {
+		group1 {
+			psels = <NRF_PSEL(TWIM_SDA, 0, 26)>, <NRF_PSEL(TWIM_SCL, 0, 27)>;
+			low-power-enable;
+		};
 	};
 };
