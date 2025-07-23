@@ -4,6 +4,8 @@
 #include <zephyr/drivers/uart.h>
 #include <math.h>
 
+LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
+
 BUILD_ASSERT(DT_NODE_HAS_COMPAT(DT_CHOSEN(zephyr_console), zephyr_cdc_acm_uart),
 	     "Console device is not ACM CDC UART device");
 
@@ -35,7 +37,7 @@ int main(void) {
         // polling thread - to get all data and send to host
         // cursor thread - to get dx dy data from paw3395 sensor
         // dpi control thread - to check dpi and implement led
-        k_msleep(1000);    
+        k_msleep(1000); 
     }
 
     return 0;
