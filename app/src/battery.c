@@ -23,13 +23,13 @@ int battery_init(void)
 	return 0;
 }
 
-int battery_get_voltage_mv(int *voltage_mv)
+int battery_get_percentage(int *percentage)
 {
 	if (battery_dev == NULL || !device_is_ready(battery_dev)) {
 		return -ENODEV;
 	}
 
-	fuel_gauge_prop_t prop = FUEL_GAUGE_VOLTAGE;
+	fuel_gauge_prop_t prop = FUEL_GAUGE_RELATIVE_STATE_OF_CHARGE;
 	union fuel_gauge_prop_val val;
 
 	int ret = fuel_gauge_get_props(battery_dev, &prop, &val, 1);
@@ -38,6 +38,6 @@ int battery_get_voltage_mv(int *voltage_mv)
 		return ret;
 	}
 
-	*voltage_mv = val.voltage;
+	*percentage = val.relative_state_of_charge;
 	return 0;
 }

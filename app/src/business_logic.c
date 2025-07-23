@@ -8,6 +8,7 @@
 #include "switch.h"
 #include "led.h"
 #include "paw3395.h"
+#include "battery.h"
 
 LOG_MODULE_REGISTER(business_logic, LOG_LEVEL_DBG);
 
@@ -38,6 +39,14 @@ const struct device *paw3395 = DEVICE_DT_GET_ONE(pixart_paw3395);
 int cursor_position_x;
 int cursor_position_y;
 int cnt = 0;
+
+// battery
+int battery_percent = 0;
+
+int get_battery_percent()
+{
+    return battery_percent;
+}
 
 void sensor_cursor_init()
 {
@@ -141,16 +150,21 @@ bool get_switch_state_left()
     return switch_get_state_left();
 }
 
-void send_output_to_host(int cursor_x, int cursor_y, int encoder_increment, bool encoder_button_state, bool switch_right_state, bool switch_left_state)
+void send_output_to_host(
+    int cursor_x, int cursor_y, 
+    int encoder_increment, bool encoder_button_state, 
+    bool switch_right_state, bool switch_left_state,
+    int battery_percent)
 {
     // This function should send the output values to the host
     // For now, we will just print the values to the console
     cnt++;
-    printk("%d,cursor_x,%d,cursor_y,%d,encoder_increment,%d,encoder_button,%d,switch_right,%d,switch_left,%d\n",
-        cnt, cursor_x, cursor_y, encoder_increment,
-        encoder_button_state,
-        switch_right_state,
-        switch_left_state);
+    printk("%d,cursor_x,%d,cursor_y,%d,encoder_increment,%d,encoder_button,%d,switch_right,%d,switch_left,%d,battery,%d\n",
+        cnt, cursor_x, cursor_y, 
+        encoder_increment, encoder_button_state,
+        switch_right_state, switch_left_state,
+        battery_percent
+    );
 
 }
 
@@ -173,7 +187,8 @@ void polling_run(void)
             get_encoder_increment(),
             get_encoder_button_state(), 
             get_switch_state_right(), 
-            get_switch_state_left()
+            get_switch_state_left(),
+            get_battery_percent()
         );
 
         // Delay for polling rate
@@ -257,6 +272,26 @@ void dpi_control_thread(void *arg1, void *arg2, void *arg3)
 }
 
 // Define the thread statically
-K_THREAD_DEFINE(cdpi_control_thread_id, DPI_CONTROL_STACK_SIZE,
+K_THREAD_DEFINE(dpi_control_thread_id, DPI_CONTROL_STACK_SIZE,
                 dpi_control_thread, NULL, NULL, NULL,
                 DPI_CONTROL_THREAD_PRIORITY, 0, 0);
+
+
+#define BATTERY_STACK_SIZE 1024
+#define BATTERY_THREAD_PRIORITY 5
+
+void battery_thread(void *arg1, void *arg2, void *arg3)
+{
+    battery_init();
+    while (1)
+    {
+        battery_get_percentage(&battery_percent);
+        k_msleep(1000);
+    }
+    
+}
+
+// Define the thread statically
+K_THREAD_DEFINE(battery_thread_id, BATTERY_STACK_SIZE,
+                battery_thread, NULL, NULL, NULL,
+                BATTERY_THREAD_PRIORITY, 0, 0);

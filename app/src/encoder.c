@@ -23,7 +23,6 @@ static int last_b = 0;
 
 #define DEBOUNCE_MS 20
 static struct k_work_delayable debounce_work;
-static int64_t last_btn_change_time = 0;
 
 static void update_scroll_direction(void) {
     int a = gpio_pin_get_dt(&scroll_a);

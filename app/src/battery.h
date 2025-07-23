@@ -3,6 +3,6 @@
 #define BATTERY_H
 
 int battery_init(void);
-int battery_get_voltage_mv(int *voltage_mv);
+int battery_get_percentage(int *percentage);
 
 #endif // BATTERY_H

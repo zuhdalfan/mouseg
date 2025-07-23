@@ -24,6 +24,8 @@ int usb_console(void)
 		/* Give CPU resources to low priority threads. */
 		k_sleep(K_MSEC(100));
 	}
+
+    return 0;
 }
 
 int main(void) {
